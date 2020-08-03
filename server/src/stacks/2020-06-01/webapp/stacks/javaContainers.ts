@@ -1,4 +1,4 @@
-import { WebAppStack, JavaContainers } from './../stack.model';
+import { WebAppStack, JavaContainers } from '../stacks.model';
 
 export const javaContainersStack: WebAppStack<JavaContainers> = {
   displayText: 'Java Containers',

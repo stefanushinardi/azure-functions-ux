@@ -1,4 +1,5 @@
-import { WebAppStack, WebAppRuntimes } from './../stack.model';
+import { WebAppStack, WebAppRuntimes } from '../stacks.model';
+import { Os } from '../../stacks.model';
 
 // EOL source: https://docs.microsoft.com/en-us/java/azure/jdk/?view=azure-java-stable#supported-java-versions-and-update-schedule
 const java11EOL = new Date(2026, 9);
@@ -8,7 +9,7 @@ const java7EOL = new Date(2023, 7);
 export const javaStack: WebAppStack<WebAppRuntimes> = {
   displayText: 'Java',
   value: 'java',
-  preferredOs: 'linux',
+  preferredOs: Os.linux,
   majorVersions: [
     {
       displayText: 'Java 11',

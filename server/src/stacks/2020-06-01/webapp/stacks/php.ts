@@ -1,4 +1,5 @@
-import { WebAppStack, WebAppRuntimes } from './../stack.model';
+import { WebAppStack, WebAppRuntimes } from '../stacks.model';
+import { Os } from '../../stacks.model';
 
 const php7Point3EOL = new Date(2021, 11, 28);
 const php7Point2EOL = new Date(2020, 11, 30);
@@ -9,7 +10,7 @@ const php5Point6EOL = new Date(2021, 2, 1);
 export const phpStack: WebAppStack<WebAppRuntimes> = {
   displayText: 'PHP',
   value: 'php',
-  preferredOs: 'linux',
+  preferredOs: Os.linux,
   majorVersions: [
     {
       displayText: 'PHP 7',

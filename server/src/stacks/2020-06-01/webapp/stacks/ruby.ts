@@ -1,4 +1,5 @@
-import { WebAppStack, WebAppRuntimes } from './../stack.model';
+import { WebAppStack, WebAppRuntimes } from '../stacks.model';
+import { Os } from '../../stacks.model';
 
 const ruby2Point4EOL = new Date(2020, 4, 1);
 const ruby2Point3EOL = new Date(2019, 3, 31);
@@ -6,7 +7,7 @@ const ruby2Point3EOL = new Date(2019, 3, 31);
 export const rubyStack: WebAppStack<WebAppRuntimes> = {
   displayText: 'Ruby',
   value: 'ruby',
-  preferredOs: 'linux',
+  preferredOs: Os.linux,
   majorVersions: [
     {
       displayText: 'Ruby 2.6',

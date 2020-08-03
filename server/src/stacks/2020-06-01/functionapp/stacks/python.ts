@@ -1,9 +1,10 @@
-import { FunctionAppStack } from './../stack.model';
+import { FunctionAppStack } from '../stacks.model';
+import { Os } from '../../stacks.model';
 
 export const pythonStack: FunctionAppStack = {
   displayText: 'Python',
   value: 'python',
-  preferredOs: 'linux',
+  preferredOs: Os.linux,
   majorVersions: [
     {
       displayText: 'Python 3',

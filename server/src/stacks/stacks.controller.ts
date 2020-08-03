@@ -2,7 +2,8 @@ import { Controller, Query, HttpException, Post, Get } from '@nestjs/common';
 import { Versions, WebAppVersions } from './versions';
 import { StacksService20200501 } from './2020-05-01/stacks.service';
 import { StacksService20200601 } from './2020-06-01/stacks.service';
-import { Os, StackValue } from './2020-06-01/functionapp/stack.model';
+import { Os } from './2020-06-01/stacks.model';
+import { StackValue } from './2020-06-01/functionapp/stacks.model';
 
 @Controller('stacks')
 export class StacksController {
@@ -59,7 +60,8 @@ export class StacksController {
     this._validateOs(os);
     this._validateStack(stack);
     this._validateRemoveHiddenStacks(removeHiddenStacks);
-    const removeHidden = removeHiddenStacks && removeHiddenStacks.toLowerCase() === 'true';
+
+    const removeHidden = (removeHiddenStacks && removeHiddenStacks === 'true') || undefined;
 
     if (apiVersion === Versions.version20200601) {
       return this._stacksService20200601.getFunctionAppStacks(os, stack, removeHidden);
@@ -67,7 +69,7 @@ export class StacksController {
   }
 
   @Get('webAppStacks')
-  webAppStacks(@Query('api-version') apiVersion: string, @Query('os') os?: 'linux' | 'windows') {
+  webAppStacks(@Query('api-version') apiVersion: string, @Query('os') os?: Os) {
     this._validateApiVersion(apiVersion, [Versions.version20200601]);
     this._validateOs(os);
 
@@ -76,8 +78,8 @@ export class StacksController {
     }
   }
 
-  private _validateOs(os?: 'linux' | 'windows') {
-    if (os && os !== 'linux' && os !== 'windows') {
+  private _validateOs(os?: string) {
+    if (os && os !== Os.linux && os !== Os.windows) {
       throw new HttpException(`Incorrect os '${os}' provided. Allowed os values are 'linux' or 'windows'.`, 400);
     }
   }
@@ -100,7 +102,7 @@ export class StacksController {
   }
 
   private _validateRemoveHiddenStacks(removeHiddenStacks?: string) {
-    if (removeHiddenStacks && removeHiddenStacks.toLowerCase() !== 'true' && removeHiddenStacks.toLowerCase() !== 'false') {
+    if (removeHiddenStacks && removeHiddenStacks !== 'true' && removeHiddenStacks !== 'false') {
       throw new HttpException(
         `Incorrect removeHiddenStacks '${removeHiddenStacks}' provided. Allowed removeHiddenStacks values are 'true' or 'false'.`,
         400

@@ -1,9 +1,10 @@
-import { FunctionAppStack } from './../stack.model';
+import { FunctionAppStack } from '../stacks.model';
+import { Os } from '../../stacks.model';
 
 export const javaStack: FunctionAppStack = {
   displayText: 'Java',
   value: 'java',
-  preferredOs: 'windows',
+  preferredOs: Os.windows,
   majorVersions: [
     {
       displayText: 'Java 11',

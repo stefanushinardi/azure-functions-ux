@@ -1,4 +1,5 @@
-import { WebAppStack, WebAppRuntimes } from './../stack.model';
+import { WebAppStack, WebAppRuntimes } from '../stacks.model';
+import { Os } from '../../stacks.model';
 
 const dotnetCore3Point0EOL = new Date(2020, 3, 3);
 const dotnetCore2Point2EOL = new Date(2019, 12, 23);
@@ -9,7 +10,7 @@ const dotnetCore1EOL = new Date(2019, 6, 27);
 export const dotnetCoreStack: WebAppStack<WebAppRuntimes> = {
   displayText: '.NET Core',
   value: 'dotnetcore',
-  preferredOs: 'windows',
+  preferredOs: Os.windows,
   majorVersions: [
     {
       displayText: '.NET Core 3',

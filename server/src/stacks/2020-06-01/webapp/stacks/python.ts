@@ -1,11 +1,12 @@
-import { WebAppStack, WebAppRuntimes } from './../stack.model';
+import { WebAppStack, WebAppRuntimes } from '../stacks.model';
+import { Os } from '../../stacks.model';
 
 const python2EOL = new Date(2020, 1, 1);
 
 export const pythonStack: WebAppStack<WebAppRuntimes> = {
   displayText: 'Python',
   value: 'python',
-  preferredOs: 'linux',
+  preferredOs: Os.linux,
   majorVersions: [
     {
       displayText: 'Python 3',

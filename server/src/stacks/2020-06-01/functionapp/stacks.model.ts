@@ -1,4 +1,5 @@
-export type Os = 'linux' | 'windows';
+import { CommonSettings, Os, AppInsightsSettings, GitHubActionSettings } from '../stacks.model';
+
 export type StackValue = 'dotnetCore' | 'dotnetFramework' | 'java' | 'node' | 'powershell' | 'python' | 'custom';
 
 type FunctionsExtensionVersion = '~1' | '~2' | '~3';
@@ -38,16 +39,6 @@ export interface FunctionAppRuntimeSettings extends CommonSettings {
   supportedFunctionsExtensionVersions: FunctionsExtensionVersion[];
 }
 
-export interface AppInsightsSettings {
-  isSupported: boolean;
-  isDefaultOff?: boolean;
-}
-
-export interface GitHubActionSettings {
-  isSupported: boolean;
-  supportedVersion?: string;
-}
-
 export interface AppSettingsDictionary {
   FUNCTIONS_WORKER_RUNTIME?: FunctionsWorkerRuntime;
   WEBSITE_NODE_DEFAULT_VERSION?: string;
@@ -58,12 +49,4 @@ export interface SiteConfigPropertiesDictionary {
   linuxFxVersion?: string;
   javaVersion?: string;
   powerShellVersion?: string;
-}
-
-export interface CommonSettings {
-  isPreview?: boolean; // Stack should be labeled as 'preview'
-  isDeprecated?: boolean; // Stack should be hidden unless user is already running that stack
-  isHidden?: boolean; // Stack should be hidden unless a feature flag is used
-  endOfLifeDate?: Date; // Stack end of life date
-  isAutoUpdate?: boolean; // Stack should be labeled as 'auto-update'
 }

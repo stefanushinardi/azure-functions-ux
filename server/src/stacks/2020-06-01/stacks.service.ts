@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ArrayUtil } from '../../utilities/array.util';
-import { WebAppStack, WebAppRuntimes, WebAppMajorVersion, JavaContainers, WebAppMinorVersion } from './webapp/stack.model';
-import { FunctionAppStack, FunctionAppMajorVersion, FunctionAppMinorVersion, Os, StackValue } from './functionapp/stack.model';
+import { WebAppStack, WebAppRuntimes, WebAppMajorVersion, JavaContainers, WebAppMinorVersion } from './webapp/stacks.model';
+import { FunctionAppStack, FunctionAppMajorVersion, FunctionAppMinorVersion, StackValue } from './functionapp/stacks.model';
 import { dotnetCoreStack as WebAppDotnetCoreStack } from './webapp/stacks/dotnetCore';
 import { javaStack as WebAppJavaStack } from './webapp/stacks/java';
 import { aspDotnetStack as WebAppAspDotnetStack } from './webapp/stacks/aspDotnet';
@@ -17,10 +17,11 @@ import { javaStack as FunctionAppJavaStack } from './functionapp/stacks/java';
 import { powershellStack as FunctionAppPowershellStack } from './functionapp/stacks/powershell';
 import { dotnetFrameworkStack as FunctionAppDotnetFrameworkStack } from './functionapp/stacks/dotnetFramework';
 import { customStack as FunctionAppCustomStack } from './functionapp/stacks/custom';
+import { Os } from './stacks.model';
 
 @Injectable()
 export class StacksService20200601 {
-  getWebAppStacks(os?: 'linux' | 'windows'): WebAppStack<WebAppRuntimes | JavaContainers>[] {
+  getWebAppStacks(os?: Os): WebAppStack<WebAppRuntimes | JavaContainers>[] {
     const runtimeStacks = [
       WebAppAspDotnetStack,
       WebAppNodeStack,
@@ -95,9 +96,9 @@ export class StacksService20200601 {
   }
 
   private _setUndefinedByOs(stacks: FunctionAppStack[], i: number, j: number, k: number, os?: Os): void {
-    if (os === 'linux') {
+    if (os === Os.linux) {
       stacks[i].majorVersions[j].minorVersions[k].stackSettings.windowsRuntimeSettings = undefined;
-    } else if (os === 'windows') {
+    } else if (os === Os.windows) {
       stacks[i].majorVersions[j].minorVersions[k].stackSettings.linuxRuntimeSettings = undefined;
     }
   }
@@ -117,10 +118,7 @@ export class StacksService20200601 {
     }
   }
 
-  private _filterRuntimeStacks(
-    stacks: WebAppStack<WebAppRuntimes>[],
-    os: 'linux' | 'windows'
-  ): WebAppStack<WebAppRuntimes | JavaContainers>[] {
+  private _filterRuntimeStacks(stacks: WebAppStack<WebAppRuntimes>[], os: Os): WebAppStack<WebAppRuntimes | JavaContainers>[] {
     const filteredStacks: WebAppStack<WebAppRuntimes | JavaContainers>[] = [];
     stacks.forEach(stack => {
       const newStack = this._buildNewStack(stack);
@@ -136,10 +134,7 @@ export class StacksService20200601 {
     return filteredStacks;
   }
 
-  private _filterContainerStacks(
-    stacks: WebAppStack<JavaContainers>[],
-    os: 'linux' | 'windows'
-  ): WebAppStack<WebAppRuntimes | JavaContainers>[] {
+  private _filterContainerStacks(stacks: WebAppStack<JavaContainers>[], os: Os): WebAppStack<WebAppRuntimes | JavaContainers>[] {
     const filteredStacks: WebAppStack<WebAppRuntimes | JavaContainers>[] = [];
     stacks.forEach(runtimeStack => {
       const newStack = this._buildNewStack(runtimeStack);
@@ -195,11 +190,11 @@ export class StacksService20200601 {
   private _addCorrectMinorVersionsForRuntime(
     newMajorVersion: WebAppMajorVersion<WebAppRuntimes | JavaContainers>,
     minorVersion: WebAppMinorVersion<WebAppRuntimes>,
-    os: 'linux' | 'windows'
+    os: Os
   ) {
-    if (os === 'linux' && minorVersion.stackSettings.linuxRuntimeSettings !== undefined) {
+    if (os === Os.linux && minorVersion.stackSettings.linuxRuntimeSettings !== undefined) {
       this._addNewMinorVersionLinuxRuntime(newMajorVersion, minorVersion);
-    } else if (os === 'windows' && minorVersion.stackSettings.windowsRuntimeSettings !== undefined) {
+    } else if (os === Os.windows && minorVersion.stackSettings.windowsRuntimeSettings !== undefined) {
       this._addNewMinorVersionWindowsRuntime(newMajorVersion, minorVersion);
     }
   }
@@ -235,11 +230,11 @@ export class StacksService20200601 {
   private _addCorrectMinorVersionsForContainer(
     newMajorVersion: WebAppMajorVersion<WebAppRuntimes | JavaContainers>,
     minorVersion: WebAppMinorVersion<JavaContainers>,
-    os: 'linux' | 'windows'
+    os: Os
   ) {
-    if (os === 'linux' && minorVersion.stackSettings.linuxContainerSettings !== undefined) {
+    if (os === Os.linux && minorVersion.stackSettings.linuxContainerSettings !== undefined) {
       this._addNewMinorVersionLinuxContainer(newMajorVersion, minorVersion);
-    } else if (os === 'windows' && minorVersion.stackSettings.windowsContainerSettings !== undefined) {
+    } else if (os === Os.windows && minorVersion.stackSettings.windowsContainerSettings !== undefined) {
       this._addNewMinorVersionWindowsContainer(newMajorVersion, minorVersion);
     }
   }

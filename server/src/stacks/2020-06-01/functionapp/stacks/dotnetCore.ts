@@ -1,9 +1,10 @@
-import { FunctionAppStack } from '../stack.model';
+import { Os } from '../../stacks.model';
+import { FunctionAppStack } from '../stacks.model';
 
 export const dotnetCoreStack: FunctionAppStack = {
   displayText: '.NET Core',
   value: 'dotnetCore',
-  preferredOs: 'windows',
+  preferredOs: Os.windows,
   majorVersions: [
     {
       displayText: '.NET Core 3',

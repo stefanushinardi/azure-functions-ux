@@ -1,9 +1,10 @@
-import { FunctionAppStack } from '../stack.model';
+import { FunctionAppStack } from '../stacks.model';
+import { Os } from '../../stacks.model';
 
 export const customStack: FunctionAppStack = {
   displayText: 'Custom',
   value: 'custom',
-  preferredOs: 'windows',
+  preferredOs: Os.windows,
   majorVersions: [
     {
       displayText: 'Custom',

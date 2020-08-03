@@ -1,9 +1,10 @@
-import { WebAppStack, WebAppRuntimes } from './../stack.model';
+import { Os } from '../../stacks.model';
+import { WebAppStack, WebAppRuntimes } from '../stacks.model';
 
 export const aspDotnetStack: WebAppStack<WebAppRuntimes> = {
   displayText: 'ASP.NET',
   value: 'aspnet',
-  preferredOs: 'windows',
+  preferredOs: Os.windows,
   majorVersions: [
     {
       displayText: 'ASP.NET V4',

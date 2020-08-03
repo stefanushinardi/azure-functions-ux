@@ -1,9 +1,10 @@
-import { FunctionAppStack } from './../stack.model';
+import { FunctionAppStack } from '../stacks.model';
+import { Os } from '../../stacks.model';
 
 export const powershellStack: FunctionAppStack = {
   displayText: 'PowerShell',
   value: 'powershell',
-  preferredOs: 'windows',
+  preferredOs: Os.windows,
   majorVersions: [
     {
       displayText: 'PowerShell 7',

@@ -1,4 +1,5 @@
-import { WebAppStack, WebAppRuntimes } from './../stack.model';
+import { WebAppStack, WebAppRuntimes } from '../stacks.model';
+import { Os } from '../../stacks.model';
 
 const node12EOL = new Date(2022, 4, 1);
 const node10EOL = new Date(2021, 4, 1);
@@ -11,7 +12,7 @@ const node4EOL = new Date(2018, 4, 30);
 export const nodeStack: WebAppStack<WebAppRuntimes> = {
   displayText: 'Node',
   value: 'node',
-  preferredOs: 'linux',
+  preferredOs: Os.linux,
   majorVersions: [
     {
       displayText: 'Node LTS',

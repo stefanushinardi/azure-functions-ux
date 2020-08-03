@@ -1,4 +1,5 @@
 import { StacksService20200601 } from '../../../../stacks/2020-06-01/stacks.service';
+import { Os } from '../../../../stacks/2020-06-01/stacks.model';
 import {
   validateAllStackLength,
   validateWindowsStacks,
@@ -35,7 +36,7 @@ describe('FunctionApp Stacks Test 2020-06-01', () => {
   // Test length of windows stacks
   describe('Test windows stack length', () => {
     it('should validate all stacks with windows are returned', done => {
-      const stacks = stacksService.getFunctionAppStacks('windows');
+      const stacks = stacksService.getFunctionAppStacks(Os.windows);
       validateWindowsStacks(stacks);
       done();
     });
@@ -44,7 +45,7 @@ describe('FunctionApp Stacks Test 2020-06-01', () => {
   // Test length of linux stacks
   describe('Test linux stack length', () => {
     it('should validate all stacks with linux are returned', done => {
-      const stacks = stacksService.getFunctionAppStacks('linux');
+      const stacks = stacksService.getFunctionAppStacks(Os.linux);
       validateLinuxStacks(stacks);
       done();
     });

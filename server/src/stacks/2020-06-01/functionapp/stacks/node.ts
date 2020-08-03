@@ -1,9 +1,10 @@
-import { FunctionAppStack } from '../stack.model';
+import { FunctionAppStack } from '../stacks.model';
+import { Os } from '../../stacks.model';
 
 export const nodeStack: FunctionAppStack = {
   displayText: 'Node.js',
   value: 'node',
-  preferredOs: 'windows',
+  preferredOs: Os.windows,
   majorVersions: [
     {
       displayText: 'Node.js 12',
