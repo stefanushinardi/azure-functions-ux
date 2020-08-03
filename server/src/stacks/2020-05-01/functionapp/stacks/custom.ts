@@ -37,7 +37,7 @@ export const customStack: FunctionAppStack = {
             linuxFxVersion: '',
           },
           siteConfigPropertiesDictionary: {
-            use32BitWorkerProcess: false
+            use32BitWorkerProcess: false,
           },
         },
       ],

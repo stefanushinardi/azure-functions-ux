@@ -1,4 +1,4 @@
-import { FunctionAppStacksService20200501 } from '../../../../stacks/functionapp/2020-05-01/stacks.service';
+import { StacksService20200501 } from '../../../../stacks/2020-05-01/stacks.service';
 import {
   validateAllStackLength,
   validateNonHiddenStackLength,
@@ -10,13 +10,13 @@ import {
   validateCustomStack,
 } from './validations';
 
-const functionAppStacksService = new FunctionAppStacksService20200501();
+const stacksService = new StacksService20200501();
 
 describe('FunctionApp Stacks Test 2020-05-01', () => {
   // Test length of all stacks
   describe('Test all stack length', () => {
     it('should validate all stacks are returned', done => {
-      const stacks = functionAppStacksService.getStacks();
+      const stacks = stacksService.getFunctionAppStacks();
       validateAllStackLength(stacks);
       done();
     });
@@ -25,7 +25,7 @@ describe('FunctionApp Stacks Test 2020-05-01', () => {
   // Test length of non-hidden stacks
   describe('Test non-hidden stack length', () => {
     it('should validate that hidden stacks are removed', done => {
-      const stacks = functionAppStacksService.getStacks(true);
+      const stacks = stacksService.getFunctionAppStacks(true);
       validateNonHiddenStackLength(stacks);
       done();
     });
@@ -34,7 +34,7 @@ describe('FunctionApp Stacks Test 2020-05-01', () => {
   // Test .NET Core stack
   describe('Test the .NET Core stack', () => {
     it('should validate the .NET Core stack', done => {
-      const stacks = functionAppStacksService.getStacks();
+      const stacks = stacksService.getFunctionAppStacks();
       validateDotnetCoreStack(stacks);
       done();
     });
@@ -43,7 +43,7 @@ describe('FunctionApp Stacks Test 2020-05-01', () => {
   // Test Node stack
   describe('Test the Node stack', () => {
     it('should validate the Node stack', done => {
-      const stacks = functionAppStacksService.getStacks();
+      const stacks = stacksService.getFunctionAppStacks();
       validateNodeStack(stacks);
       done();
     });
@@ -52,7 +52,7 @@ describe('FunctionApp Stacks Test 2020-05-01', () => {
   // Test Python stack
   describe('Test the Python stack', () => {
     it('should validate the Python stack', done => {
-      const stacks = functionAppStacksService.getStacks();
+      const stacks = stacksService.getFunctionAppStacks();
       validatePythonStack(stacks);
       done();
     });
@@ -61,7 +61,7 @@ describe('FunctionApp Stacks Test 2020-05-01', () => {
   // Test Java stack
   describe('Test the Java stack', () => {
     it('should validate the Java stack', done => {
-      const stacks = functionAppStacksService.getStacks();
+      const stacks = stacksService.getFunctionAppStacks();
       validateJavaStack(stacks);
       done();
     });
@@ -70,7 +70,7 @@ describe('FunctionApp Stacks Test 2020-05-01', () => {
   // Test PowerShell Core stack
   describe('Test the PowerShell Core stack', () => {
     it('should validate the PowerShell Core stack', done => {
-      const stacks = functionAppStacksService.getStacks();
+      const stacks = stacksService.getFunctionAppStacks();
       validatePowershellCoreStack(stacks);
       done();
     });
@@ -79,7 +79,7 @@ describe('FunctionApp Stacks Test 2020-05-01', () => {
   // Test Custom Core stack
   describe('Test the Custom stack', () => {
     it('should validate the Custom stack', done => {
-      const stacks = functionAppStacksService.getStacks();
+      const stacks = stacksService.getFunctionAppStacks();
       validateCustomStack(stacks);
       done();
     });
