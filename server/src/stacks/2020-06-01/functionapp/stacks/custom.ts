@@ -22,7 +22,7 @@ export const customStack: FunctionAppStack = {
               },
               remoteDebuggingSupported: false,
               gitHubActionSettings: {
-                isSupported: false
+                isSupported: false,
               },
               appSettingsDictionary: {
                 FUNCTIONS_WORKER_RUNTIME: 'custom',
@@ -44,7 +44,7 @@ export const customStack: FunctionAppStack = {
                 isSupported: false,
               },
               appSettingsDictionary: {
-                FUNCTIONS_WORKER_RUNTIME: 'custom'
+                FUNCTIONS_WORKER_RUNTIME: 'custom',
               },
               siteConfigPropertiesDictionary: {
                 use32BitWorkerProcess: false,
@@ -55,6 +55,6 @@ export const customStack: FunctionAppStack = {
           },
         },
       ],
-    }
+    },
   ],
 };

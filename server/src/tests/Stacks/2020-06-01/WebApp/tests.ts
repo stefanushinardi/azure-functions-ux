@@ -1,4 +1,4 @@
-import { WebAppStacksService20200601 } from '../../../../stacks/webapp/2020-06-01/stacks.service';
+import { StacksService20200601 } from '../../../../stacks/2020-06-01/stacks.service';
 import {
   validateAllStackLength,
   validateWindowsStacks,
@@ -13,13 +13,13 @@ import {
   validateJavaContainersStack,
 } from './validations';
 
-const webAppStacksService = new WebAppStacksService20200601();
+const stacksService = new StacksService20200601();
 
 describe('WebApp Stacks Test 2020-06-01', () => {
   // Test length of all stacks
   describe('Test all stack length', () => {
     it('should validate all stacks are returned', done => {
-      const stacks = webAppStacksService.getStacks();
+      const stacks = stacksService.getWebAppStacks();
       validateAllStackLength(stacks);
       done();
     });
@@ -28,7 +28,7 @@ describe('WebApp Stacks Test 2020-06-01', () => {
   // Test length of windows stacks
   describe('Test windows stack length', () => {
     it('should validate all stacks with windows are returned', done => {
-      const stacks = webAppStacksService.getStacks('windows');
+      const stacks = stacksService.getWebAppStacks('windows');
       validateWindowsStacks(stacks);
       done();
     });
@@ -37,7 +37,7 @@ describe('WebApp Stacks Test 2020-06-01', () => {
   // Test length of linux stacks
   describe('Test linux stack length', () => {
     it('should validate all stacks with linux are returned', done => {
-      const stacks = webAppStacksService.getStacks('linux');
+      const stacks = stacksService.getWebAppStacks('linux');
       validateLinuxStacks(stacks);
       done();
     });
@@ -46,7 +46,7 @@ describe('WebApp Stacks Test 2020-06-01', () => {
   // Test ASP stack
   describe('Test the ASP stack', () => {
     it('should validate the ASP stack', done => {
-      const stacks = webAppStacksService.getStacks();
+      const stacks = stacksService.getWebAppStacks();
       validateASPStack(stacks);
       done();
     });
@@ -55,7 +55,7 @@ describe('WebApp Stacks Test 2020-06-01', () => {
   // Test Node stack
   describe('Test the Node stack', () => {
     it('should validate the Node stack', done => {
-      const stacks = webAppStacksService.getStacks();
+      const stacks = stacksService.getWebAppStacks();
       validateNodeStack(stacks);
       done();
     });
@@ -64,7 +64,7 @@ describe('WebApp Stacks Test 2020-06-01', () => {
   // Test Python stack
   describe('Test the Python stack', () => {
     it('should validate the Python stack', done => {
-      const stacks = webAppStacksService.getStacks();
+      const stacks = stacksService.getWebAppStacks();
       validatePythonStack(stacks);
       done();
     });
@@ -73,7 +73,7 @@ describe('WebApp Stacks Test 2020-06-01', () => {
   // Test PHP stack
   describe('Test the PHP stack', () => {
     it('should validate the PHP stack', done => {
-      const stacks = webAppStacksService.getStacks();
+      const stacks = stacksService.getWebAppStacks();
       validatePHPStack(stacks);
       done();
     });
@@ -82,7 +82,7 @@ describe('WebApp Stacks Test 2020-06-01', () => {
   // Test .NET Core stack
   describe('Test the .NET Core stack', () => {
     it('should validate the .NET Core stack', done => {
-      const stacks = webAppStacksService.getStacks();
+      const stacks = stacksService.getWebAppStacks();
       validateDotnetCoreStack(stacks);
       done();
     });
@@ -91,7 +91,7 @@ describe('WebApp Stacks Test 2020-06-01', () => {
   // Test Ruby stack
   describe('Test the Ruby stack', () => {
     it('should validate the Ruby stack', done => {
-      const stacks = webAppStacksService.getStacks();
+      const stacks = stacksService.getWebAppStacks();
       validateRubyStack(stacks);
       done();
     });
@@ -100,7 +100,7 @@ describe('WebApp Stacks Test 2020-06-01', () => {
   // Test Java stack
   describe('Test the Java stack', () => {
     it('should validate the Java stack', done => {
-      const stacks = webAppStacksService.getStacks();
+      const stacks = stacksService.getWebAppStacks();
       validateJavaStack(stacks);
       done();
     });
@@ -109,7 +109,7 @@ describe('WebApp Stacks Test 2020-06-01', () => {
   // Test Java Containers stack
   describe('Test the Java Containers stack', () => {
     it('should validate the Java Containers stack', done => {
-      const stacks = webAppStacksService.getStacks();
+      const stacks = stacksService.getWebAppStacks();
       validateJavaContainersStack(stacks);
       done();
     });

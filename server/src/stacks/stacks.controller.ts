@@ -1,24 +1,19 @@
 import { Controller, Query, HttpException, Post, Get } from '@nestjs/common';
 import { Versions, WebAppVersions } from './versions';
 import { StacksService20200501 } from './2020-05-01/stacks.service';
-import { WebAppStacksService20200601 } from './webapp/2020-06-01/stacks.service';
-import { FunctionAppStacksService20200601 } from './functionapp/2020-06-01/stacks.service';
-import { Os, StackValue } from './functionapp/2020-06-01/stack.model';
+import { StacksService20200601 } from './2020-06-01/stacks.service';
+import { Os, StackValue } from './2020-06-01/functionapp/stack.model';
 
 @Controller('stacks')
 export class StacksController {
-  constructor(
-    private _stackService20200501: StacksService20200501,
-    private _stackWebAppService20200601: WebAppStacksService20200601,
-    private _stackFunctionAppService20200601: FunctionAppStacksService20200601
-  ) {}
+  constructor(private _stacksService20200501: StacksService20200501, private _stacksService20200601: StacksService20200601) {}
 
   @Post('webAppCreateStacks')
   webAppCreateStacks(@Query('api-version') apiVersion: string) {
     this._validateApiVersion(apiVersion, WebAppVersions);
 
     if (apiVersion === Versions.version20200501) {
-      return this._stackService20200501.getWebAppCreateStacks();
+      return this._stacksService20200501.getWebAppCreateStacks();
     }
   }
 
@@ -28,7 +23,7 @@ export class StacksController {
     this._validateOs(os);
 
     if (apiVersion === Versions.version20200501) {
-      return this._stackService20200501.getWebAppConfigStacks(os);
+      return this._stacksService20200501.getWebAppConfigStacks(os);
     }
   }
 
@@ -38,7 +33,7 @@ export class StacksController {
     this._validateOs(os);
 
     if (apiVersion === Versions.version20200501) {
-      return this._stackService20200501.getWebAppGitHubActionStacks(os);
+      return this._stacksService20200501.getWebAppGitHubActionStacks(os);
     }
   }
 
@@ -49,7 +44,7 @@ export class StacksController {
     const removeHidden = removeHiddenStacks && removeHiddenStacks.toLowerCase() === 'true';
 
     if (apiVersion === Versions.version20200501) {
-      return this._stackService20200501.getFunctionAppStacks(removeHidden);
+      return this._stacksService20200501.getFunctionAppStacks(removeHidden);
     }
   }
 
@@ -67,7 +62,7 @@ export class StacksController {
     const removeHidden = removeHiddenStacks && removeHiddenStacks.toLowerCase() === 'true';
 
     if (apiVersion === Versions.version20200601) {
-      return this._stackFunctionAppService20200601.getStacks(os, stack, removeHidden);
+      return this._stacksService20200601.getFunctionAppStacks(os, stack, removeHidden);
     }
   }
 
@@ -77,7 +72,7 @@ export class StacksController {
     this._validateOs(os);
 
     if (apiVersion === Versions.version20200601) {
-      return this._stackWebAppService20200601.getStacks(os);
+      return this._stacksService20200601.getWebAppStacks(os);
     }
   }
 
