@@ -40,6 +40,7 @@ export class Constants {
   public static WebsiteRunFromPackage = 'WEBSITE_RUN_FROM_PACKAGE';
   public static localCacheOptionSettingName = 'WEBSITE_LOCAL_CACHE_OPTION';
   public static localCacheOptionSettingValue = 'always';
+  public static errorPageSettingName = 'ANCM_ADDITIONAL_ERROR_PAGE_LINK';
 
   public static httpMethods = new HttpMethods();
   public static swaggerSecretName = 'swaggerdocumentationkey';

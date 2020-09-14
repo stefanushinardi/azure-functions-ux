@@ -67,6 +67,7 @@ export class AddSlotComponent extends FeatureComponent<ResourceId> implements On
   public slotOptInNeeded = false;
   public slotOptInEnabled = false;
   public isFunctionApp = false;
+  public isNetCore = false;
 
   public progressMessage: string;
   public progressMessageClass: InfoBoxType = 'info';
@@ -140,12 +141,13 @@ export class AddSlotComponent extends FeatureComponent<ResourceId> implements On
           this._siteService.getSite(this._siteId),
           this._siteService.getSlots(this._siteId),
           this._siteService.getAppSettings(this._siteId),
+          this._siteService.getSiteConfig(this._siteId),
           this._authZService.hasPermission(this._siteId, [AuthzService.writeScope]),
           this._authZService.hasReadOnlyLock(this._siteId)
         );
       })
       .mergeMap(r => {
-        const [siteResult, slotsResult, appSettingsResult, hasWritePermission, hasReadOnlyLock] = r;
+        const [siteResult, slotsResult, appSettingsResult, siteConfigResult, hasWritePermission, hasReadOnlyLock] = r;
 
         this.hasCreateAccess = hasWritePermission && !hasReadOnlyLock;
 
@@ -167,9 +169,19 @@ export class AddSlotComponent extends FeatureComponent<ResourceId> implements On
           });
         }
 
+        if (!siteConfigResult.isSuccessful) {
+          this._logService.error(LogCategories.addSlot, '/add-slot', siteConfigResult.error.result);
+          this.loadingFailed = true;
+          this.loadingSlotsFailureMessage = this._translateService.instant(PortalResources.error_unableToLoadSlotsList, {
+            errorMessage: (slotsResult.error && slotsResult.error.message) || '',
+          });
+        }
+
         if (!this.loadingFailed) {
           this._slotsArm = slotsResult.result.value;
           this._slotsArm.unshift(siteResult.result);
+
+          this.isNetCore = !!siteConfigResult.result.properties.netFrameworkVersion;
 
           if (this.isFunctionApp) {
             this._setFunctionAppContext(siteResult, appSettingsResult);
@@ -285,7 +297,7 @@ export class AddSlotComponent extends FeatureComponent<ResourceId> implements On
     const siteId = this._slotsArm[0].id;
     const location = this._slotsArm[0].location;
     const serverFarmId = this._slotsArm[0].properties.serverFarmId;
-    const cloneConfig = !this.isFunctionApp ? newSlotConfig || {} : undefined;
+    const cloneConfig = !this.isFunctionApp ? newSlotConfig : undefined;
 
     const slotNewInfo: SlotNewInfo = {
       resourceId: `${siteId}/slots/${newSlotName}`,
@@ -308,7 +320,14 @@ export class AddSlotComponent extends FeatureComponent<ResourceId> implements On
       .switchMap(s => {
         if (!s || s.isSuccessful) {
           // _enableSlotOptIn() was a no-op or completed successfully
-          return this._siteService.createSlot(siteId, newSlotName, location, serverFarmId, cloneConfig);
+          const scmUrl = `${this.slotPrefix}.${newSlotName}.scm.${this.slotSuffix}`;
+          return this._siteService.createSlot(siteId, newSlotName, location, serverFarmId, cloneConfig).do(response => {
+            if (this.isNetCore) {
+              const newOrUpdatedSettings = {};
+              newOrUpdatedSettings[Constants.errorPageSettingName] = `${scmUrl}/detectors?type=tools&name=eventviewer`;
+              // this._siteService.addOrUpdateAppSettings(siteId, newOrUpdatedSettings);
+            }
+          });
         } else {
           // _enableSlotOptIn() failed so we pass on the failure
           return Observable.of(s);
