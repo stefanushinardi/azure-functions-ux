@@ -1,4 +1,5 @@
 import { HttpException, Injectable } from '@nestjs/common';
+import { join, normalize } from 'path';
 import { AppType, FunctionAppRuntimeStack, JavaContainers, Os, PublishType, WebAppRuntimeStack } from '../WorkflowModel';
 const fs = require('fs');
 
@@ -75,7 +76,7 @@ export class WorkflowService20201201 {
 
     switch (runtimeStack) {
       case WebAppRuntimeStack.DotNetCore:
-        return this.readWorkflowFile('web-app-configs\\dotnetcore-linux.config.yml');
+        return this.readWorkflowFile('web-app-configs/dotnetcore-linux.config.yml');
       case WebAppRuntimeStack.Java:
         if (this.javaWarWorkflowCheck(variables)) {
           return this.readWorkflowFile('web-app-configs/java-war-linux.config.yml');
@@ -136,7 +137,9 @@ export class WorkflowService20201201 {
 
   readWorkflowFile(filePath: string) {
     try {
-      return fs.readFileSync(`..\\workflows\\2020-12-01\\${filePath}`, 'utf8');
+      const configParts = filePath.split('/');
+      const configFileLoc = normalize(join(__dirname, '..', 'workflows', '2020-12-01', `${configParts[0]}`, `${configParts[1]}`));
+      return fs.readFileSync(configFileLoc, 'utf8');
     } catch (err) {
       if (err.response) {
         throw new HttpException(err.response.data, err.response.status);
