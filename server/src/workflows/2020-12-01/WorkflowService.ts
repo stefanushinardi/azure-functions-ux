@@ -136,7 +136,7 @@ export class WorkflowService20201201 {
 
   readWorkflowFile(filePath: string) {
     try {
-      return fs.readFileSync(`./workflows/2020-12-01/${filePath}`, 'utf8');
+      return fs.readFileSync(`../workflows/2020-12-01/${filePath}`, 'utf8');
     } catch (err) {
       if (err.response) {
         throw new HttpException(err.response.data, err.response.status);
