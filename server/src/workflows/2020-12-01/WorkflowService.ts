@@ -75,7 +75,7 @@ export class WorkflowService20201201 {
 
     switch (runtimeStack) {
       case WebAppRuntimeStack.DotNetCore:
-        return this.readWorkflowFile('web-app-configs/dotnetcore-linux.config.yml');
+        return this.readWorkflowFile('web-app-configs\\dotnetcore-linux.config.yml');
       case WebAppRuntimeStack.Java:
         if (this.javaWarWorkflowCheck(variables)) {
           return this.readWorkflowFile('web-app-configs/java-war-linux.config.yml');
@@ -136,7 +136,7 @@ export class WorkflowService20201201 {
 
   readWorkflowFile(filePath: string) {
     try {
-      return fs.readFileSync(`../workflows/2020-12-01/${filePath}`, 'utf8');
+      return fs.readFileSync(`..\\workflows\\2020-12-01\\${filePath}`, 'utf8');
     } catch (err) {
       if (err.response) {
         throw new HttpException(err.response.data, err.response.status);
