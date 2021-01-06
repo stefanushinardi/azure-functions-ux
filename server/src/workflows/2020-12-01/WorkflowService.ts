@@ -138,7 +138,7 @@ export class WorkflowService20201201 {
   readWorkflowFile(filePath: string) {
     try {
       const configParts = filePath.split('/');
-      const configFileLoc = normalize(join(__dirname, '2020-12-01', `${configParts[0]}`, `${configParts[1]}`));
+      const configFileLoc = normalize(join(__dirname, `${configParts[0]}`, `${configParts[1]}`));
       return fs.readFileSync(configFileLoc, 'utf8');
     } catch (err) {
       if (err.response) {
