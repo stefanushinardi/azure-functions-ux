@@ -15,6 +15,7 @@ import { PortalContext } from '../../../../../../PortalContext';
 import { LogCategories } from '../../../../../../utils/LogCategories';
 import LogService from '../../../../../../utils/LogService';
 import { ArmFunctionDescriptor } from '../../../../../../utils/resourceDescriptors';
+import StringUtils from '../../../../../../utils/string';
 import { BindingFormBuilder } from '../../../common/BindingFormBuilder';
 import { dialogModelStyle } from '../FunctionIntegrate.style';
 import { getBindingDirection } from '../FunctionIntegrate.utils';
@@ -55,7 +56,8 @@ const BindingEditor: React.SFC<BindingEditorProps> = props => {
   const [showDeleteConfirmDialog, setShowDeleteConfirmDialog] = useState(false);
 
   const currentBinding = allBindings.find(
-    b => b.type === currentBindingInfo.type && b.direction === getBindingDirection(currentBindingInfo)
+    binding =>
+      StringUtils.equalsIgnoreCase(binding.type, currentBindingInfo.type) && binding.direction === getBindingDirection(currentBindingInfo)
   ) as Binding;
 
   if (!currentBinding) {
@@ -141,7 +143,7 @@ const BindingEditor: React.SFC<BindingEditorProps> = props => {
                 {builder.getFields(formProps, readOnly || isDisabled, true)}
               </div>
             </form>
-            {currentBinding.type === FunctionIntegrateConstants.eventGridType ? (
+            {StringUtils.equalsIgnoreCase(currentBinding.type, FunctionIntegrateConstants.eventGridType) ? (
               <Link onClick={() => onEventGridCreateClick(functionInfo.id, portalContext)}>{t('eventGrid_createConnection')}</Link>
             ) : (
               undefined

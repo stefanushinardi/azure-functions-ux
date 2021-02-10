@@ -8,6 +8,7 @@ import TextField from '../../../../components/form-controls/TextField';
 import Toggle from '../../../../components/form-controls/Toggle';
 import { Binding, BindingSetting, BindingSettingValue, BindingValidator } from '../../../../models/functions/binding';
 import { BindingInfo, BindingType } from '../../../../models/functions/function-binding';
+import StringUtils from '../../../../utils/string';
 import { getFunctionBindingDirection } from '../function/integrate/FunctionIntegrate.utils';
 import { FunctionIntegrateConstants } from '../function/integrate/FunctionIntegrateConstants';
 import HttpMethodMultiDropdown from './HttpMethodMultiDropdown';
@@ -19,7 +20,7 @@ export interface BindingEditorFormValues {
 
 export class BindingFormBuilder {
   public static getBindingTypeName = (currentBinding: BindingInfo, bindings: Binding[]): string => {
-    return (bindings.find(binding => binding.type === currentBinding.type) as Binding).displayName;
+    return (bindings.find(binding => StringUtils.equalsIgnoreCase(binding.type, currentBinding.type)) as Binding).displayName;
   };
 
   constructor(

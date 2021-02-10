@@ -11,10 +11,11 @@ import LoadingComponent from '../../../../../../components/Loading/LoadingCompon
 import { Binding, BindingDirection } from '../../../../../../models/functions/binding';
 import { BindingInfo, BindingType } from '../../../../../../models/functions/function-binding';
 import { KeyValue } from '../../../../../../models/portal-models';
+import { Links } from '../../../../../../utils/FwLinks';
+import StringUtils from '../../../../../../utils/string';
 import { BindingFormBuilder } from '../../../common/BindingFormBuilder';
 import { getFunctionBindingDirection } from '../FunctionIntegrate.utils';
 import { FunctionIntegrateConstants } from '../FunctionIntegrateConstants';
-import { Links } from '../../../../../../utils/FwLinks';
 
 export interface BindingCreatorProps {
   bindingDirection: BindingDirection;
@@ -102,7 +103,8 @@ const BindingCreator: React.SFC<BindingCreatorProps> = props => {
               <div>
                 <h3>
                   {t('integrateCreateBindingTypeDetails').format(
-                    (directionalBindings.find(binding => formProps.values.type === binding.type) as Binding).displayName
+                    (directionalBindings.find(binding => StringUtils.equalsIgnoreCase(formProps.values.type, binding.type)) as Binding)
+                      .displayName
                   )}
                 </h3>
                 {bindingTypeSpecificFields(formProps, directionalBindings, functionAppId, t, currentType, setCurrentType)}
@@ -130,7 +132,7 @@ const bindingTypeSpecificFields = (
   setCurrentType
 ): JSX.Element[] => {
   const binding = filteredBindings.find(filteredBinding => {
-    return filteredBinding.type === formProps.values.type;
+    return StringUtils.equalsIgnoreCase(filteredBinding.type, formProps.values.type);
   });
 
   if (!binding) {
@@ -158,7 +160,7 @@ const getDefaultValues = (bindingType: BindingType, filteredBindings: Binding[])
   const defaultValues: KeyValue<string> = {};
 
   const binding = filteredBindings.find(filteredBinding => {
-    return filteredBinding.type === bindingType;
+    return StringUtils.equalsIgnoreCase(filteredBinding.type, bindingType);
   });
 
   if (binding) {
