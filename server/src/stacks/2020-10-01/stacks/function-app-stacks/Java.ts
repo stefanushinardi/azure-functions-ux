@@ -1,117 +1,134 @@
 import { FunctionAppStack } from '../../models/FunctionAppStackModel';
+import { getDateString } from '../date-utilities';
 
-export const javaStack: FunctionAppStack = {
-  displayText: 'Java',
-  value: 'java',
-  preferredOs: 'windows',
-  majorVersions: [
-    {
-      displayText: 'Java 11',
-      value: '11',
-      minorVersions: [
-        {
-          displayText: 'Java 11',
-          value: '11.0',
-          stackSettings: {
-            windowsRuntimeSettings: {
-              runtimeVersion: '11',
-              isAutoUpdate: true,
-              remoteDebuggingSupported: false,
-              appInsightsSettings: {
-                isSupported: true,
+const getJavaStack: (useIsoDateFormat: boolean) => FunctionAppStack = (useIsoDateFormat: boolean) => {
+  // EOL source: https://docs.microsoft.com/en-us/java/azure/jdk/?view=azure-java-stable#supported-java-versions-and-update-schedule
+  const java17EOL = getDateString(new Date(2031, 9), useIsoDateFormat);
+  const java11EOL = getDateString(new Date(2026, 9), useIsoDateFormat);
+  const java8EOL = getDateString(new Date(2025, 3), useIsoDateFormat);
+  const java7EOL = getDateString(new Date(2023, 7), useIsoDateFormat);
+
+  return {
+    displayText: 'Java',
+    value: 'java',
+    preferredOs: 'windows',
+    majorVersions: [
+      {
+        displayText: 'Java 11',
+        value: '11',
+        minorVersions: [
+          {
+            displayText: 'Java 11',
+            value: '11.0',
+            stackSettings: {
+              windowsRuntimeSettings: {
+                runtimeVersion: '11',
+                isAutoUpdate: true,
+                remoteDebuggingSupported: false,
+                appInsightsSettings: {
+                  isSupported: true,
+                },
+                gitHubActionSettings: {
+                  isSupported: true,
+                  supportedVersion: '11',
+                },
+                appSettingsDictionary: {
+                  FUNCTIONS_WORKER_RUNTIME: 'java',
+                },
+                siteConfigPropertiesDictionary: {
+                  use32BitWorkerProcess: true,
+                  javaVersion: '11',
+                  netFrameworkVersion: 'v6.0',
+                },
+                supportedFunctionsExtensionVersions: ['~4', '~3'],
+                endOfLifeDate: java11EOL,
               },
-              gitHubActionSettings: {
-                isSupported: true,
-                supportedVersion: '11',
+              linuxRuntimeSettings: {
+                runtimeVersion: 'Java|11',
+                isAutoUpdate: true,
+                remoteDebuggingSupported: false,
+                appInsightsSettings: {
+                  isSupported: true,
+                },
+                gitHubActionSettings: {
+                  isSupported: true,
+                  supportedVersion: '11',
+                },
+                appSettingsDictionary: {
+                  FUNCTIONS_WORKER_RUNTIME: 'java',
+                },
+                siteConfigPropertiesDictionary: {
+                  use32BitWorkerProcess: false,
+                  linuxFxVersion: 'Java|11',
+                },
+                supportedFunctionsExtensionVersions: ['~4', '~3'],
+                endOfLifeDate: java11EOL,
               },
-              appSettingsDictionary: {
-                FUNCTIONS_WORKER_RUNTIME: 'java',
-              },
-              siteConfigPropertiesDictionary: {
-                use32BitWorkerProcess: true,
-                javaVersion: '11',
-                netFrameworkVersion: 'v6.0',
-              },
-              supportedFunctionsExtensionVersions: ['~4', '~3'],
-            },
-            linuxRuntimeSettings: {
-              runtimeVersion: 'Java|11',
-              isAutoUpdate: true,
-              remoteDebuggingSupported: false,
-              appInsightsSettings: {
-                isSupported: true,
-              },
-              gitHubActionSettings: {
-                isSupported: true,
-                supportedVersion: '11',
-              },
-              appSettingsDictionary: {
-                FUNCTIONS_WORKER_RUNTIME: 'java',
-              },
-              siteConfigPropertiesDictionary: {
-                use32BitWorkerProcess: false,
-                linuxFxVersion: 'Java|11',
-              },
-              supportedFunctionsExtensionVersions: ['~4', '~3'],
-            },
-          },
-        },
-      ],
-    },
-    {
-      displayText: 'Java 8',
-      value: '8',
-      minorVersions: [
-        {
-          displayText: 'Java 8',
-          value: '8.0',
-          stackSettings: {
-            windowsRuntimeSettings: {
-              runtimeVersion: '1.8',
-              isAutoUpdate: true,
-              isDefault: true,
-              remoteDebuggingSupported: false,
-              appInsightsSettings: {
-                isSupported: true,
-              },
-              gitHubActionSettings: {
-                isSupported: true,
-                supportedVersion: '8',
-              },
-              appSettingsDictionary: {
-                FUNCTIONS_WORKER_RUNTIME: 'java',
-              },
-              siteConfigPropertiesDictionary: {
-                use32BitWorkerProcess: true,
-                javaVersion: '1.8',
-                netFrameworkVersion: 'v6.0',
-              },
-              supportedFunctionsExtensionVersions: ['~4', '~3', '~2'],
-            },
-            linuxRuntimeSettings: {
-              runtimeVersion: 'Java|8',
-              isAutoUpdate: true,
-              isDefault: true,
-              remoteDebuggingSupported: false,
-              appInsightsSettings: {
-                isSupported: true,
-              },
-              gitHubActionSettings: {
-                isSupported: true,
-                supportedVersion: '8',
-              },
-              appSettingsDictionary: {
-                FUNCTIONS_WORKER_RUNTIME: 'java',
-              },
-              siteConfigPropertiesDictionary: {
-                use32BitWorkerProcess: false,
-                linuxFxVersion: 'Java|8',
-              },
-              supportedFunctionsExtensionVersions: ['~4', '~3'],
             },
           },
-        },
-      ],
-    },
-  ],
+        ],
+      },
+      {
+        displayText: 'Java 8',
+        value: '8',
+        minorVersions: [
+          {
+            displayText: 'Java 8',
+            value: '8.0',
+            stackSettings: {
+              windowsRuntimeSettings: {
+                runtimeVersion: '1.8',
+                isAutoUpdate: true,
+                isDefault: true,
+                remoteDebuggingSupported: false,
+                appInsightsSettings: {
+                  isSupported: true,
+                },
+                gitHubActionSettings: {
+                  isSupported: true,
+                  supportedVersion: '8',
+                },
+                appSettingsDictionary: {
+                  FUNCTIONS_WORKER_RUNTIME: 'java',
+                },
+                siteConfigPropertiesDictionary: {
+                  use32BitWorkerProcess: true,
+                  javaVersion: '1.8',
+                  netFrameworkVersion: 'v6.0',
+                },
+                supportedFunctionsExtensionVersions: ['~4', '~3', '~2'],
+                endOfLifeDate: java8EOL,
+              },
+              linuxRuntimeSettings: {
+                runtimeVersion: 'Java|8',
+                isAutoUpdate: true,
+                isDefault: true,
+                remoteDebuggingSupported: false,
+                appInsightsSettings: {
+                  isSupported: true,
+                },
+                gitHubActionSettings: {
+                  isSupported: true,
+                  supportedVersion: '8',
+                },
+                appSettingsDictionary: {
+                  FUNCTIONS_WORKER_RUNTIME: 'java',
+                },
+                siteConfigPropertiesDictionary: {
+                  use32BitWorkerProcess: false,
+                  linuxFxVersion: 'Java|8',
+                },
+                supportedFunctionsExtensionVersions: ['~4', '~3'],
+                endOfLifeDate: java8EOL,
+              },
+            },
+          },
+        ],
+      },
+    ],
+  };
 };
+
+export const javaStackNonIsoDates: FunctionAppStack = getJavaStack(false);
+
+export const javaStack: FunctionAppStack = getJavaStack(true);

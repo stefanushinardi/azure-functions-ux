@@ -3,6 +3,7 @@ import { getDateString } from '../date-utilities';
 
 const getPowershellStack: (useIsoDateFormat: boolean) => FunctionAppStack = (useIsoDateFormat: boolean) => {
   const powershell6point2EOL = getDateString(new Date(2020, 9, 4), useIsoDateFormat);
+  const powershell7point0EOL = getDateString(new Date(2022, 12, 3), useIsoDateFormat);
 
   return {
     displayText: 'PowerShell Core',
@@ -36,7 +37,8 @@ const getPowershellStack: (useIsoDateFormat: boolean) => FunctionAppStack = (use
                   powerShellVersion: '7.2',
                   netFrameworkVersion: 'v6.0',
                 },
-                supportedFunctionsExtensionVersions: ['~4']
+                supportedFunctionsExtensionVersions: ['~4'],
+                endOfLifeDate: powershell7point0EOL,
               },
               linuxRuntimeSettings: {
                 runtimeVersion: 'PowerShell|7.2',
@@ -57,6 +59,7 @@ const getPowershellStack: (useIsoDateFormat: boolean) => FunctionAppStack = (use
                   linuxFxVersion: 'PowerShell|7.2',
                 },
                 supportedFunctionsExtensionVersions: ['~4'],
+                endOfLifeDate: powershell7point0EOL,
               },
             },
           },
